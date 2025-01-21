@@ -1,0 +1,90 @@
+/* Stil pentru containerul principal */
+.evDetailsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Stil pentru titlu */
+.evDetailsTitlu {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Stil pentru grup și descriere */
+.evDetailsGrup {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold; /* Stil pentru text hardcodat */
+}
+
+.evDetailsGrup span {
+    font-weight: normal;
+    color: #333;
+}
+
+.evDetailsDescriere {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold; /* Stil pentru text hardcodat */
+}
+
+.evDetailsDescriere p {
+    margin: 5px 0;
+}
+
+/* Stil pentru date */
+.evDetailsData {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold; /* Stil pentru text hardcodat */
+}
+
+.evDetailsData span {
+    font-weight: normal;
+    color: #333;
+}
+
+/* Stil pentru textul de eroare */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Stil pentru input și cod de acces */
+.evDetailsDivCodAccess {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.evDetailsCod {
+    font-size: 16px;
+    margin-bottom: 5px;
+    font-weight: bold; /* Stil pentru text hardcodat */
+}
+
+input[type="text"] {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
+}
+
+/* Stil pentru mesajul de confirmare */
+strong {
+    color: green;
+    font-size: 16px;
+    margin-top: 10px;
+}

@@ -1,0 +1,54 @@
+.Organizer-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align content to the top vertically */
+    align-items: center; /* Center content horizontally */
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto 0; /* Center horizontally and add space from the top */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center text */
+}
+
+.Organizer-container h2 {
+    margin: 0;
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.HeaderAndButton {
+    display: flex;
+    justify-content: space-between; /* Align header and button in-line with space between */
+    align-items: center; /* Vertically align header and button */
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.Add-Group {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.Add-Group:hover {
+    background-color: #155bb5;
+}
+
+.Event-Group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Spacing between items */
+    justify-content: center;
+    width: 100%;
+    max-width: 600px;
+    padding: 10px;
+}

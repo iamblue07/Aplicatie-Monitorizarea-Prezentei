@@ -1,0 +1,78 @@
+.containerCreateEvent {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.divTitlu, .divDescriere, .divDataStart, .divDataFinal {
+    margin-bottom: 20px;
+}
+
+div p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+input[type="text"], input[type="date"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.inputDescriere {
+    width: 100%;
+    height: 100px;
+    resize: vertical;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+
+button.btnCreeaza {
+    background-color: #28a745; /* verde */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 20px;
+}
+
+button.btnCreeaza:hover {
+    background-color: #218838;
+}
+
+.alertaTitlu, .alertaDescriere, .alertaStart, .alertaFinal {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
+    text-align: center;
+}
+
+
+.alertaSucces {
+    color: green;
+    font-size: 14px;
+    margin-top: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+

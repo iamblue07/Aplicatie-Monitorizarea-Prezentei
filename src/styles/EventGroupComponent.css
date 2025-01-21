@@ -1,0 +1,70 @@
+.EventGroupComponent {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+/* Style for the GroupID */
+.GroupID {
+  font-weight: bold;
+  color: #2f3b52;
+  margin-right: 10px;
+  flex-shrink: 0;  /* Prevents shrinking */
+}
+
+/* Style for the GroupName */
+.GroupName {
+  font-size: 16px;
+  color: #333;
+  flex-grow: 1;  /* Allow it to take remaining space */
+  margin-right: 10px;
+  white-space: nowrap;  /* Prevent text from wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;  /* Add ellipsis for overflow */
+  cursor: pointer;  /* Make the cursor a pointer to indicate clickability */
+  transition: color 0.3s, text-decoration 0.3s;  /* Smooth transition for hover effects */
+}
+
+/* Style for GroupName when hovering */
+.GroupName:hover {
+  color: #1e88e5;  /* Change color to blue or any highlight color */
+  text-decoration: underline;  /* Add underline to signal clickability */
+}
+
+/* Style for the Delete button */
+.DeleteButton {
+  background-color: #e53935;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.DeleteButton:hover {
+  background-color: #d32f2f;
+}
+
+.DownloadButton {
+  background-color: #0da84e;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.DownloadButton:hover {
+  background-color: #0a8d41;
+}

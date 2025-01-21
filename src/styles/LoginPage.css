@@ -1,0 +1,86 @@
+/* Container for the login page */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;  /* Make the login container expand to fill the available width */
+    background-color: #f0f4f8;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 0; /* Remove any unnecessary padding */
+  }
+  
+  /* Login Heading */
+  .login-heading {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  /* Form container */
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 400px;
+    gap: 15px;
+    justify-content: center; /* Align the form vertically */
+    flex-grow: 1; /* Allow form to grow and fill the remaining space */
+    padding: 0 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Input fields */
+  .input-field {
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.3s ease;
+  }
+  
+  .input-field:focus {
+    border-color: #2f73e6;
+  }
+  
+  /* Submit button */
+  .login-button {
+    background-color: #2f73e6;
+    color: white;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .login-button:hover {
+    background-color: #1a59c6;
+  }
+  
+  .login-button:active {
+    background-color: #144b9d;
+  }
+  
+  /* Responsiveness */
+  @media (max-width: 600px) {
+    .login-container {
+      padding: 15px;
+    }
+  
+    .login-form {
+      width: 100%;
+      max-width: 100%;
+    }
+  
+    .login-heading {
+      font-size: 24px;
+    }
+  }
+  

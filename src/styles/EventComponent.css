@@ -1,0 +1,92 @@
+/* Style for the event details container */
+.event-details {
+    padding: 20px;
+    background-color: #f9f9f9; /* Slight background to differentiate the section */
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for better separation */
+    width: 100%;
+    max-width: 800px; /* Set a maximum width to prevent overly wide sections */
+    margin: 20px auto; /* Center the container horizontally with some spacing */
+  }
+  
+  /* Style for each input section (title, description, date, etc.) */
+  .event-details div {
+    margin-bottom: 20px; /* Increased spacing between sections for better readability */
+    display: flex;
+    flex-direction: column; /* Stack label and input vertically */
+    gap: 10px; /* Space between label and input */
+  }
+  
+  /* Style for the labels to align with inputs */
+  .event-details label {
+    font-size: 14px;
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 5px; /* Space between label and input */
+  }
+  
+  /* Style for inputs (text, date, etc.) */
+  .event-details input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    width: 100%; /* Ensure inputs take up the full width of their container */
+    box-sizing: border-box; /* Include padding in the width calculation */
+  }
+  
+  .event-details input:focus {
+    border-color: #1e88e5; /* Highlight the input border on focus */
+    outline: none; /* Remove the default outline for a cleaner look */
+    box-shadow: 0 0 5px rgba(30, 136, 229, 0.3); /* Subtle shadow to indicate focus */
+  }
+  
+  /* Style for buttons */
+  button {
+    padding: 10px 15px;
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    width: auto;
+  }
+  
+  /* Hover effect for buttons */
+  button:hover {
+    background-color: #1565c0; /* Darker blue on hover */
+  }
+  
+  /* Style for the QR code */
+  .event-details img {
+    margin-top: 30px;
+    max-width: 200px; /* Ensure the QR code is appropriately sized */
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; /* Center the QR code */
+  }
+  
+  /* Style for the Access Code section */
+  .event-details .access-code {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .event-details .access-code p {
+    margin-top: 10px;
+    color: #2f3b52;
+    font-size: 18px;
+    letter-spacing: 2px;
+    font-weight: normal;
+  }
+  
+  .access-code {
+    align-items: center;
+  }

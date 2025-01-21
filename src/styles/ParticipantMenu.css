@@ -1,0 +1,99 @@
+/* Stilizare pentru containerul principal al meniului de participanți */
+.ContainerParticipantMenu {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 0 auto;
+}
+
+/* Stilizare pentru titlul principal */
+.headingParticipantMenu {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #333;
+    text-align: center; /* Asigură alinierea titlului în centru */
+}
+
+/* Lista de evenimente */
+.Events-List {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Stilizare pentru fiecare eveniment */
+.div-event {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    flex-wrap: wrap; /* Permite ca textul să se împartă pe mai multe linii în cazul în care nu există suficient spațiu */
+}
+
+/* Subliniază linkul pentru numele evenimentului */
+.Event-Link {
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Modificări la hover pentru link */
+.Event-Link:hover {
+    color: #0056b3;
+}
+
+/* Stilizare pentru fiecare etichetă (ID, Nume, Deschis, Închis) */
+.div-event strong {
+    font-weight: bold;
+    color: #555;
+}
+
+/* Stilizare pentru marginea de jos a fiecărui eveniment */
+.div-event:after {
+    content: "";
+    display: block;
+    margin-top: 10px;
+    border-bottom: 1px solid #e0e0e0;
+    width: 100%;
+}
+
+/* Stilizare pentru detaliile evenimentului, pentru a le separa vizual */
+.div-event div {
+    margin-right: 20px; /* Se adaugă un spațiu între detalii */
+    white-space: nowrap; /* Evită ca textul să se împartă pe mai multe linii */
+}
+
+/* Stilizare pentru butonul QR */
+.btnScanQR {
+    display: block; /* Face butonul să ocupe o linie întreagă */
+    margin: 30px auto; /* Centrează butonul pe orizontală */
+    padding: 15px 30px; /* Dimensiuni mai mari pentru padding */
+    font-size: 18px; /* Text mai mare */
+    font-weight: bold; /* Text îngroșat */
+    color: #fff; /* Culoare text alb */
+    background-color: #007bff; /* Culoarea de fundal */
+    border: none; /* Elimină contururile implicite */
+    border-radius: 8px; /* Colțuri rotunjite */
+    cursor: pointer; /* Adaugă un cursor pointer */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adaugă un efect de umbră */
+    transition: background-color 0.3s ease; /* Adaugă o tranziție la hover */
+}
+
+/* Hover pentru butonul QR */
+.btnScanQR:hover {
+    background-color: #0056b3; /* Culoare mai închisă la hover */
+}
+
+/* Adaugă spațiu suplimentar în jurul butonului */
+.btnScanQR:focus {
+    outline: none; /* Elimină conturul default */
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.3); /* Adaugă un efect focus */
+}

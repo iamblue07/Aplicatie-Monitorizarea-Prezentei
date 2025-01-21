@@ -1,0 +1,77 @@
+/* Style for the create group container */
+.create-group {
+    padding: 20px;
+    background-color: #f9f9f9; /* Slight background to differentiate the section */
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow for better separation */
+    width: 100%;
+    max-width: 600px; /* Set a maximum width to prevent overly wide sections */
+    margin: 20px auto; /* Center the container horizontally with some spacing */
+}
+
+/* Style for the form elements */
+.create-group form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Increased spacing between sections for better readability */
+}
+
+/* Style for the labels to align with inputs */
+.create-group label {
+    font-size: 16px;
+    color: #555;
+    font-weight: bold;
+    margin-bottom: 8px; /* Space between label and input */
+}
+
+/* Style for the input fields */
+.create-group input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    width: 100%; /* Ensure inputs take up the full width of their container */
+    box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+/* Focus state for inputs */
+.create-group input:focus {
+    border-color: #1e88e5; /* Highlight the input border on focus */
+    outline: none; /* Remove the default outline for a cleaner look */
+    box-shadow: 0 0 5px rgba(30, 136, 229, 0.3); /* Subtle shadow to indicate focus */
+}
+
+/* Style for the submit button */
+.create-group button {
+    padding: 12px 18px;
+    background-color: #1e88e5;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+    width: auto;
+}
+
+/* Hover effect for submit button */
+.create-group button:hover {
+    background-color: #1565c0; /* Darker blue on hover */
+}
+
+/* Optional error message style */
+.create-group .error-message {
+    color: red;
+    font-size: 14px;
+    font-weight: normal;
+    margin-top: 10px;
+}
+
+/* Optional success message style */
+.create-group .success-message {
+    color: green;
+    font-size: 14px;
+    font-weight: normal;
+    margin-top: 10px;
+}
