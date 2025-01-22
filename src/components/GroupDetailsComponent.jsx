@@ -50,10 +50,15 @@ const GroupDetailsPage = () => {
     
   }
 
+  const goBack = () => {
+    navigate("/Organizer");
+  }
+
 
 
   return (
     <div>
+      <button className="back-button" onClick={goBack}>Inapoi</button>
       <div className = "divHeaderButton">
       <h2>Evenimentele grupului {id_group}</h2>
       <button className='btnAddEvent' onClick={() => navigate(`/${id_group}/create-event`)}>Adauga un eveniment nou</button>

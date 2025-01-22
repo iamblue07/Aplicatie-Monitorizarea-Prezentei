@@ -63,7 +63,7 @@ const CreateEventComponent = () => {
             descriere_eveniment: descriere, 
             data_start: dataStart, 
             data_stop: dataFinal,
-            cod_acces: Math.random().toString(36).substring(2, 10)};    
+            cod_acces: Math.random().toString(36).substring(2, 10).toUpperCase()};    
             console.log(JSON.stringify(newEvent));
     
             fetch(`http://localhost:3000/api/evenimente`, {

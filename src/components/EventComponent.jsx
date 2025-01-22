@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import "../styles/EventComponent.css";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../hooks/useAuth';
+import QRCode from 'qrcode';
 
 const EventComponent = () => {
   const { id_group, id_event } = useParams();
@@ -17,6 +18,8 @@ const EventComponent = () => {
   const [participants, setParticipants] = useState([]);
   const [AG, setAG] = useState('');
   const { isAuthenticated, isOrganizer } = useContext(AuthContext);
+  const [isQrEnlarged, setIsQrEnlarged] = useState(false);
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
   const navigate = useNavigate();
 
   const handleTitleChange = (e) => {
@@ -207,6 +210,11 @@ const EventComponent = () => {
       });
   };
   
+  const generateQR = (cod_acces) => {
+      QRCode.toDataURL(cod_acces)
+        .then(url => setQrCodeUrl(url))
+        .catch(error => console.error("QR Code generation error:", error));
+    };
 
   useEffect(() => {
     console.log("id_group:", id_group, "id_eveniment:", id_event);
@@ -218,12 +226,19 @@ const EventComponent = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((response) => response.json()).then(event => setEvent(event)).catch((error) => {
+      }).then((response) => response.json()).then(event => {
+        setEvent(event);
+        generateQR(event.cod_acces);
+      }).catch((error) => {
         setAG("Eroare citire eveniment!");
         console.error(error);
       });
     }
   }, [id_group, id_event, isAuthenticated, isOrganizer, navigate]);
+
+  const toggleQrEnlargement = () => {
+    setIsQrEnlarged(!isQrEnlarged);
+  };
 
   if (!event) return <div>Loading...</div>;
 
@@ -273,7 +288,12 @@ const EventComponent = () => {
       </div>
 
       <div>
-        <img src="https://via.placeholder.com/150" alt="QR Code" />
+      <img
+          src={qrCodeUrl}
+          alt={event.cod_acces}
+          className={isQrEnlarged ? 'qr-code enlarged' : 'qr-code'}
+          onClick={toggleQrEnlargement}
+        />
         <p className='access-code'>Cod de acces: {event.cod_acces}</p>
       </div>
 
