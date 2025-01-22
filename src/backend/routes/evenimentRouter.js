@@ -4,10 +4,26 @@ import {
   getAllEvenimente,
   getEvenimentById,
   updateEveniment,
-  deleteEveniment
+  deleteEveniment,
+  getEvenimenteByGrupId
 } from '../dataAccess/dataAccessEveniment.js';
 
 const evenimentRouter = express.Router();
+
+
+// GET: Obține toate evenimentele pentru un grup specific
+evenimentRouter.get('/grup/:id_grup', async (req, res) => {
+  try {
+    const { id_grup } = req.params; // Extrage id_grup din parametrii rutei
+    const evenimente = await getEvenimenteByGrupId(id_grup); // Obține evenimentele asociate grupului
+    if (!evenimente || evenimente.length === 0) {
+      return res.status(404).json({ message: 'Nu au fost găsite evenimente pentru acest grup' });
+    }
+    res.json(evenimente);
+  } catch (err) {
+    res.status(500).json({ message: 'Eroare la obținerea evenimentelor pentru grup', error: err.message });
+  }
+});
 
 // GET: Obține toate evenimentele
 evenimentRouter.get('/', async (req, res) => {

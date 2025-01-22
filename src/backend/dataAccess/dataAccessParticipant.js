@@ -1,5 +1,32 @@
 import participant from '../entities/participant.js';
 
+// Login: Verifică autentificarea participantului
+export const loginParticipant = async (email, parola) => {
+  try {
+    const part = await participant.findOne({ where: { email } });
+    console.log(part);
+    
+    if (!part) {
+      throw new Error('Participantul nu a fost găsit');
+    }
+
+    // Verifică dacă parola introdusă corespunde cu cea din baza de date
+    if (part.parola !== parola) {
+      throw new Error('Parola incorectă');
+    }
+
+    // Returnează informațiile despre participant
+    return {
+      esteOrganizer: part.esteOrganizer,
+      nume: part.nume,
+      prenume: part.prenume,
+      id_participant:part.id_participant
+    };
+  } catch (error) {
+    throw new Error('Eroare la autentificare: ' + error.message);
+  }
+};
+
 // Create: Creează un nou participant
 export const createParticipant = async (participantData) => {
   try {

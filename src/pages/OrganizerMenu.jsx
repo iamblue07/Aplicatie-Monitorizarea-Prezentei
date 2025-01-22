@@ -47,8 +47,98 @@ const OrganizerMenu = () => {
   };
 
   const downloadGroupList = (id_group) => {
-    //TODO  descarcare
-  }
+    // 1. Fetch la evenimentele grupului
+    fetch(`http://localhost:3000/api/evenimente/grup/${id_group}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((evenimente) => {
+        const listaEvenimente = [];
+  
+        // 2. Iterăm prin evenimentele grupului și facem fetch la participanți pentru fiecare eveniment
+        const fetchPromises = evenimente.map((eveniment) => {
+          return fetch(`http://localhost:3000/api/participanti-eveniment/${eveniment.id_eveniment}`, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+            .then((response) => response.json())
+            .then((participanti) => {
+              // 3. Adăugăm participanții în listaEvenimente
+              const fetchParticipantiPromises = participanti.map((id) => {
+                return fetch(`http://localhost:3000/api/participanti/${id.id_participant}`, {
+                  method: 'GET',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                })
+                  .then((response) => response.json())
+                  .then((participant) => {
+                    listaEvenimente.push({
+                      id_eveniment: eveniment.id_eveniment,
+                      titlu_eveniment: eveniment.titlu_eveniment,
+                      id_participant: participant.id_participant,
+                      nume_participant: participant.nume,
+                      prenume_participant: participant.prenume,
+                      data_confirmare: id.data_confirmare,  // Folosim data_confirmare în loc de email
+                    });
+                  })
+                  .catch((error) => {
+                    console.error(`Eroare la preluarea detaliilor participantului ${id.id_participant}:`, error);
+                  });
+              });
+  
+              // Așteptăm să finalizăm toate fetch-urile pentru participanți
+              return Promise.all(fetchParticipantiPromises);
+            })
+            .catch((error) => {
+              console.error(`Eroare la preluarea participanților pentru evenimentul ${eveniment.id_eveniment}:`, error);
+            });
+        });
+  
+        // 3. Așteptăm finalizarea tuturor fetch-urilor
+        Promise.all(fetchPromises)
+          .then(() => {
+            // 4. Creăm conținutul CSV
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "ID Eveniment,Titlu Eveniment,ID Participant,Nume Participant,Prenume Participant,Data Confirmare\n";
+  
+            listaEvenimente.forEach((row) => {
+              csvContent += `${row.id_eveniment},${row.titlu_eveniment},${row.id_participant},${row.nume_participant},${row.prenume_participant},${row.data_confirmare}\n`;
+            });
+  
+            // 5. Creăm un link pentru descărcare
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `lista_participanti_grup_${id_group}.csv`);
+            document.body.appendChild(link);
+  
+            // 6. Simulăm click-ul pe link pentru a descărca fișierul
+            link.click();
+            document.body.removeChild(link);
+  
+            console.log('Fișierul CSV a fost descărcat cu succes!');
+          })
+          .catch((error) => {
+            console.error("Eroare la procesarea datelor:", error);
+          });
+      })
+      .catch((error) => {
+        console.error("Eroare la obținerea evenimentelor grupului:", error);
+      });
+  };
+  
+  
+  
+  
+  
+  
+  
 
   useEffect(() => {
     if(isAuthenticated && isOrganizer)

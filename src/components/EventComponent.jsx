@@ -96,47 +96,117 @@ const EventComponent = () => {
   };
 
   const readParticipants = (id_event) => {
-    //TODO citit id, numele participantilor si ora conectarii la eveniment
-    
-    if(!listaOpen) {
-      const idParticipanti = [];
+    if (!listaOpen) {
       fetch(`http://localhost:3000/api/participanti-eveniment/${id_event}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
         },
-      }).then((response) => response.json()).then(participants => setIdParticipanti(participants)).catch((error) => {
-        setAG("Eroare citire lista participanti!");});
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Eroare la obținerea participanților evenimentului!");
+          }
+          return response.json();
+        })
+        .then((participantiEveniment) => {
+          // Obține datele tuturor participanților folosind Promise.all
+          const requests = participantiEveniment.map((entry) =>
+            fetch(`http://localhost:3000/api/participanti/${entry.id_participant}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`Eroare la obținerea detaliilor participantului cu ID: ${entry.id_participant}`);
+                }
+                return response.json().then((participant) => ({
+                  id_participant: participant.id_participant,
+                  nume: participant.nume,
+                  prenume: participant.prenume,
+                  data_confirmare: entry.data_confirmare,
+                }));
+              })
+          );
+  
+          return Promise.all(requests);
+        })
+        .then((listaParticipanti) => {
+          setParticipants(listaParticipanti);
+          setListaOpen(true);
+        })
+        .catch((error) => {
+          console.error(error);
+          setAG("Eroare la citirea listei de participanți!");
+        });
+    } else {
+      setListaOpen(false);
+      setParticipants([]);
+    }
+  };
+  
+  const downloadParticipants = (id_event) => {
+    fetch(`http://localhost:3000/api/participanti-eveniment/${id_event}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => response.json())
+      .then((participants) => {
         const listaParticipanti = [];
-        idParticipanti.forEach((id) => {
-            fetch(`http://localhost:3000/api/participanti/${id.id_participant}`, {
+  
+        const fetchPromises = participants.map((id) => {
+          return fetch(`http://localhost:3000/api/participanti/${id.id_participant}`, {
             method: 'GET',
             headers: {
               'Content-Type': 'application/json',
             },
-            })
+          })
             .then((response) => response.json())
-            .then((participant) => 
+            .then((participant) => {
               listaParticipanti.push({
-              id_participant: participant.id_participant,
-              nume: participant.nume,
-              prenume: participant.prenume,
-              data_confirmare: id.data_confirmare,
-              })
-            )
-            .catch((error) => {
-              setAG("Eroare citire lista participanti!");
+                id_participant: participant.id_participant,
+                nume: participant.nume,
+                prenume: participant.prenume,
+                data_confirmare: id.data_confirmare,
+              });
             });
         });
-        console.log(listaParticipanti);
-        setListaOpen(true);
-        setParticipants(listaParticipanti);
-      }
-    else {
-      setListaOpen(false);
-      setParticipants([]);
-    }
-  }
+  
+        Promise.all(fetchPromises)
+          .then(() => {
+            // Creare fișier CSV
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "ID Participant,Nume,Prenume,Data Confirmare\n";
+  
+            listaParticipanti.forEach((p) => {
+              csvContent += `${p.id_participant},${p.nume},${p.prenume},${p.data_confirmare}\n`;
+            });
+  
+            // Creare link pentru descărcare
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `participanti_event_${id_event}.csv`);
+            document.body.appendChild(link);
+  
+            link.click();
+            document.body.removeChild(link);
+          })
+          .catch((error) => {
+            console.error("Eroare la preluarea listei de participanți:", error);
+            setAG("Eroare descărcare lista participanți!");
+          });
+      })
+      .catch((error) => {
+        console.error("Eroare la preluarea participanților evenimentului:", error);
+        setAG("Eroare descărcare lista participanți!");
+      });
+  };
+  
 
   useEffect(() => {
     console.log("id_group:", id_group, "id_eveniment:", id_event);
@@ -214,7 +284,7 @@ const EventComponent = () => {
             <ul>
               {participants.map((participant) => (
                 <li key={participant.id_participant}>
-                  <strong>{participant.nume_participant}</strong> S-a conectat la: {participant.data_conectarii}
+                  <strong>{participant.nume} {participant.prenume}</strong> S-a conectat la: {participant.data_confirmare}
                 </li>
               ))}
             </ul>

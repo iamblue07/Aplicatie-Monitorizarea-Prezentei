@@ -14,7 +14,7 @@ const CreateGroupPage = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const numeGrup = document.querySelector('.create-group__input').value;
-        const alertMessage = document.querySelector('.status_message');
+        const alertMessage = document.querySelector('.status-message');
         const submitBtn=document.querySelector('.create-group__button');
 
         if (!numeGrup) {

@@ -1,6 +1,21 @@
 import eveniment from '../entities/eveniment.js';
 import participantiLaEveniment from '../entities/participantiLaEveniment.js';
 
+
+export const getEvenimenteByGrupId = async (id_grup) => {
+  try {
+    const evenimente = await eveniment.findAll({
+      where: {
+        id_grup: id_grup // Căutăm evenimentele care au id_grup-ul specificat
+      }
+    });
+    return evenimente;
+  } catch (err) {
+    throw new Error('Eroare la obținerea evenimentelor din baza de date: ' + err.message);
+  }
+};
+
+
 // Create: Creează un nou eveniment
 export const createEveniment = async (evenimentData) => {
   try {

@@ -7,42 +7,60 @@ const ParticipantMenu = () => {
 
     const [listEvents, setListEvents] = useState([]);
     const navigate = useNavigate();
-    const { isAuthenticated, isOrganizer } = useContext(AuthContext);
+    const { isAuthenticated, isOrganizer, id_participant } = useContext(AuthContext);
 
     const readEventsFromDatabase = () => {
-
-        //TODO de implementat citirea evenimentelor marcate OPEN din baza de date
-        const mockEvents = [
-            {   
-                id_eveniment: 1,
-                id_grup: 11,
-                titlu_eveniment: "Eveniment 1",
-                descriere_evenimen: "Descriere 1",
-                data_start: "2024-12-25T10:00:00",
-                data_stop: "2024-12-26T10:00:00",
-                cod_acces: 1234
+        fetch("http://localhost:3000/api/evenimente", {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
             },
-            {
-                id_eveniment: 2,
-                id_grup: 22,
-                titlu_eveniment: "Eveniment 2",
-                descriere_evenimen: "Descriere 2",
-                data_start: "2024-12-25T10:00:00",
-                data_stop: "2024-12-26T10:00:00",
-                cod_acces: 1235
-            },
-            {   
-                id_eveniment: 3,
-                id_grup: 33,
-                titlu_eveniment: "Eveniment 3",
-                descriere_evenimen: "Descriere 3",
-                data_start: "2024-12-25T10:00:00",
-                data_stop: "2024-12-26T10:00:00",
-                cod_acces: 1236
+        })
+        .then((response) => {
+            // Verificăm dacă cererea a fost cu succes
+            if (!response.ok) {
+                throw new Error("Nu am reușit să obținem evenimentele.");
             }
-        ];
-        setListEvents(mockEvents);
+            return response.json();
+        })
+        .then((events) => {
+            // Obținem data curentă (în milisecunde)
+            const currentDate = Date.now();
+    
+            // Filtrăm evenimentele pentru a păstra doar cele care sunt active
+            const filteredEvents = events.filter(event => {
+                const startDate = new Date(event.data_start).getTime(); // Convertim data_start într-un timestamp
+                const endDate = new Date(event.data_stop).getTime();   // Convertim data_stop într-un timestamp
+    
+                // Verificăm dacă evenimentul este activ (start < data curentă < stop)
+                return startDate < currentDate && endDate > currentDate;
+            });
+    
+            // Verificăm dacă există evenimente
+            if (filteredEvents && filteredEvents.length > 0) {
+                // Aici poți face o conversie pentru a potrivi structura de tipul mockEvents, dacă este necesar
+                const formattedEvents = filteredEvents.map(event => ({
+                    id_eveniment: event.id_eveniment,
+                    id_grup: event.id_grup,
+                    titlu_eveniment: event.titlu_eveniment,
+                    descriere_eveniment: event.descriere_eveniment,
+                    data_start: event.data_start, // Asigură-te că data este formatată corect în backend
+                    data_stop: event.data_stop,
+                    cod_acces: event.cod_acces
+                }));
+    
+                // Setăm evenimentele în starea componentelor
+                setListEvents(formattedEvents);
+            } else {
+                setListEvents([]); // Dacă nu există evenimente valide, setăm lista goală
+            }
+        })
+        .catch((error) => {
+            console.error("Eroare la obținerea evenimentelor:", error);
+            setListEvents([]); // Dacă apare vreo eroare, setăm lista goală
+        });
     };
+    
 
     useEffect( () => {
         if(isAuthenticated && isOrganizer === false) {

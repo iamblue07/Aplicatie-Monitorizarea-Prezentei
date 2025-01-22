@@ -5,9 +5,31 @@ import {
   getParticipantById,
   updateParticipant,
   deleteParticipant,
+  loginParticipant
 } from '../dataAccess/dataAccessParticipant.js';
 
 const participantRouter = express.Router();
+
+
+// POST: Autentificare participant
+participantRouter.post('/login', async (req, res) => {
+  const { email, parola } = req.body;
+
+  try {
+    const data = await loginParticipant(email, parola);
+
+    // Dacă autentificarea a fost reușită, returnează detaliile participantului
+    return res.json({ 
+      message: 'Autentificare reușită!',
+      esteOrganizer: data.esteOrganizer,
+      nume: data.nume,
+      prenume: data.prenume,
+      id_participant: data.id_participant
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Eroare la autentificare', error: err.message });
+  }
+});
 
 // GET: Obține toți participanții
 participantRouter.get('/', async (req, res) => {
@@ -36,8 +58,8 @@ participantRouter.get('/:id', async (req, res) => {
 // POST: Creează un participant nou
 participantRouter.post('/', async (req, res) => {
   try {
-    const { nume, prenume, email, esteOrganizer } = req.body;
-    const newParticipant = await createParticipant({ nume, prenume, email, esteOrganizer });
+    const { nume, prenume, email, parola, esteOrganizer } = req.body;
+    const newParticipant = await createParticipant({ nume, prenume, email, parola, esteOrganizer });
     res.status(201).json(newParticipant);
   } catch (err) {
     res.status(500).json({ message: 'Eroare la crearea participantului', error: err.message });

@@ -20,6 +20,10 @@ const participant = sequelize.define('participant', {
     allowNull: false,
     unique: true,
   },
+  parola: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   esteOrganizer: {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
