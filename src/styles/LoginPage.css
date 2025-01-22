@@ -1,3 +1,14 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+}
+*{
+  box-sizing: border-box;
+}
+
 /* Container for the login page */
 .login-container {
     display: flex;
@@ -31,7 +42,6 @@
     justify-content: center; /* Align the form vertically */
     flex-grow: 1; /* Allow form to grow and fill the remaining space */
     padding: 0 20px;
-    box-sizing: border-box;
   }
   
   /* Input fields */
@@ -77,6 +87,7 @@
     .login-form {
       width: 100%;
       max-width: 100%;
+      flex-grow: 0;
     }
   
     .login-heading {

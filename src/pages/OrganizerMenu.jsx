@@ -8,22 +8,42 @@ const OrganizerMenu = () => {
   const [eventGroups, setEventGroups] = useState([]);
   const navigate = useNavigate();
   const { isAuthenticated, isOrganizer } = useContext(AuthContext);
+  const [readError,setReadError]=useState('');
 
   const readGroupsDataBase = () => {
-    // TODO: de implementat citirea tuturor grupurilor din baza de date
-    
-    const mockData = [
-      { id_group: 1, group_name: "Group 1" },
-      { id_group: 2, group_name: "Group 2" },
-      { id_group: 3, group_name: "Group 3" },
-    ];
-    setEventGroups(mockData);
+    fetch(`http://localhost:3000/api/grupuri-evenimente`,{
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response)=>response.json()).then((groups)=>setEventGroups(groups)) //fetch response contains a json array
+      .catch((error)=>{
+        setReadError("Eroare: Grupurile nu au putut fi afisate!");
+        console.error(error);
+      });
   };
 
   const onGroupDelete = (id_group) => {
-    // TODO: de implementat stergerea unui grup si a tuturor evenimentelor atasate lui din baza de date
-    const updatedGroups = eventGroups.filter(group => group.id_group !== id_group);
-    setEventGroups(updatedGroups);
+    fetch(`http://localhost:3000/api/grupuri-evenimente/${id_group}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete the group");
+        }
+        return response.json();
+      })
+      .then(() => {
+        // Update state only after a successful deletion
+        setEventGroups((prevGroups) =>
+          prevGroups.filter((group) => group.id_grup !== id_group)
+        );
+      })
+      .catch((error) => console.error("Eroare la stergere grup: ", error));
   };
 
   const downloadGroupList = (id_group) => {
@@ -45,11 +65,11 @@ const OrganizerMenu = () => {
         <button className="Add-Group" onClick={() => navigate("/create-group")}> Adaugati un grup nou</button>
       </div>
       <div className="Event-Group">
-        {eventGroups.map(group => ( //da, aici m-am complicat nitel mai mult. Abia intelesesem ce fac. Dar eh, cred ca e mai profesionala metoda asta
-          <EventGroupComponent      //in rest am mapat normal, spre exemplu in GroupDetailsComponent
-            key={group.id_group}
-            id_group={group.id_group}
-            group_name={group.group_name}
+        {eventGroups.map(group => (
+          <EventGroupComponent
+            key={group.id_grup}
+            id_group={group.id_grup}
+            group_name={group.titlu_grup}
             onGroupDelete={onGroupDelete}
             downloadGroupList={downloadGroupList}
           />

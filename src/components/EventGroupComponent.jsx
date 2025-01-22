@@ -22,7 +22,7 @@ const EventGroupComponent = ({ id_group, group_name, onGroupDelete, downloadGrou
 
   return (
     <div className="EventGroupComponent">
-      <span className="GroupID">{id_group}</span>
+      <span className="GroupID">Id:{id_group}</span>
       <span className="GroupName" onClick = {() => navigate(`/group/${id_group}`)}>{group_name}</span>
       <button className="DeleteButton" onClick={() => onGroupDelete(id_group)}>
         Sterge

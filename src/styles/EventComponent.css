@@ -90,3 +90,12 @@
   .access-code {
     align-items: center;
   }
+
+  .update-status {
+    font-size: 16px;
+    position: relative;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  

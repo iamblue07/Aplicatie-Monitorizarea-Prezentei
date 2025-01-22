@@ -7,36 +7,28 @@ import { AuthContext } from '../hooks/useAuth';
 const GroupDetailsPage = () => {
   const { id_group } = useParams();
   const [events, setEvents] = useState([]);
+  const [readError,setReadError]=useState('');
   const navigate = useNavigate();
   const {isAuthenticated, isOrganizer} = useContext(AuthContext);
 
   useEffect(() => {
-    if(!isAuthenticated || !isOrganizer) {
+    if (!isAuthenticated || !isOrganizer) {
       navigate("/");
     } else {
-    //TODO implementat citirea din BD a evenimentelor care apartin grupului
-
-    const MockEvents = [
-        {
-          id_eveniment: 1,
-          id_grup: id_group,
-          titlu_eveniment: "Eveniment 1",
-          descriere_evenimen: "Descriere 1",
-          data_start: "2024-12-25T10:00:00",
-          data_stop: "2024-12-26T10:00:00",
-          cod_acces: 1234
+      fetch(`http://localhost:3000/api/evenimente`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
         },
-        {
-          id_eveniment: 2,
-          id_grup: id_group,
-          titlu_eveniment: "Eveniment 2",
-          descriere_evenimen: "Descriere 2",
-          data_start: "2024-12-25T10:00:00",
-          data_stop: "2024-12-26T10:00:00",
-          cod_acces: 1235
-        }
-      ];
-    setEvents(MockEvents);
+      })
+        .then((response) => response.json())
+        .then((groups) =>
+          setEvents(groups.filter((group) => group.id_grup === parseInt(id_group, 10)))
+        ) // fetch response contains a json array
+        .catch((error) => {
+          setReadError("Eroare: Evenimentele nu au putut fi afisate!");
+          console.error(error);
+        });
     }
   }, [isAuthenticated, isOrganizer, navigate, id_group]);
 
@@ -46,8 +38,16 @@ const GroupDetailsPage = () => {
   };
   
   const deleteEvent = (id_event) => {
-    const updatedEventsList = events.filter(event => event.id_eveniment !== id_event);
-    setEvents(updatedEventsList);
+    fetch(`http://localhost:3000/api/evenimente/${id_event}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then((response) => response.json())
+    .then(setEvents(events.filter(event => event.id_eveniment !== id_event)))
+    .catch((error) => console.error("Eroare la stergere eveniment: ",error));
+    
   }
 
 
